@@ -17,6 +17,7 @@ import org.bsplines.ltexls.parsing.plaintext.PlaintextAnnotatedTextBuilder
 import org.bsplines.ltexls.parsing.program.ProgramAnnotatedTextBuilder
 import org.bsplines.ltexls.parsing.program.ProgramCommentRegexs
 import org.bsplines.ltexls.parsing.restructuredtext.RestructuredtextAnnotatedTextBuilder
+import org.bsplines.ltexls.parsing.typst.TypstAnnotatedTextBuilder
 import org.bsplines.ltexls.settings.Settings
 import org.bsplines.ltexls.tools.I18n
 import org.bsplines.ltexls.tools.Logging
@@ -125,6 +126,7 @@ abstract class CodeAnnotatedTextBuilder(
         "org" -> OrgAnnotatedTextBuilder(codeLanguageId)
         "plaintext" -> PlaintextAnnotatedTextBuilder(codeLanguageId)
         "restructuredtext" -> RestructuredtextAnnotatedTextBuilder(codeLanguageId)
+        "typst" -> TypstAnnotatedTextBuilder(codeLanguageId)
         else -> {
           if (ProgramCommentRegexs.isSupportedCodeLanguageId(codeLanguageId)) {
             ProgramAnnotatedTextBuilder(codeLanguageId)

@@ -18,6 +18,7 @@ import org.bsplines.ltexls.parsing.plaintext.PlaintextFragmentizer
 import org.bsplines.ltexls.parsing.program.ProgramCommentRegexs
 import org.bsplines.ltexls.parsing.program.ProgramFragmentizer
 import org.bsplines.ltexls.parsing.restructuredtext.RestructuredtextFragmentizer
+import org.bsplines.ltexls.parsing.typst.TypstFragmentizer
 import org.bsplines.ltexls.settings.Settings
 import org.bsplines.ltexls.tools.I18n
 import org.bsplines.ltexls.tools.Logging
@@ -72,6 +73,7 @@ abstract class CodeFragmentizer(
         "org" -> OrgFragmentizer(codeLanguageId)
         "plaintext" -> PlaintextFragmentizer(codeLanguageId)
         "restructuredtext" -> RestructuredtextFragmentizer(codeLanguageId)
+        "typst" -> TypstFragmentizer(codeLanguageId)
         else -> {
           if (ProgramCommentRegexs.isSupportedCodeLanguageId(codeLanguageId)) {
             ProgramFragmentizer(codeLanguageId)

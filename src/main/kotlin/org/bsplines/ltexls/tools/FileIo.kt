@@ -175,6 +175,8 @@ object FileIo {
       "swift"
     } else if (fileName.endsWith(".ts")) {
       "typescript"
+    } else if (fileName.endsWith(".typ")) {
+      "typst"
     } else if (fileName.endsWith(".vb")) {
       "vb"
     } else if (fileName.endsWith(".v")) {

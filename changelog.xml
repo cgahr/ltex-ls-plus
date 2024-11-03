@@ -13,6 +13,9 @@
   </properties>
   <body>
     <release version="18.3.0" date="upcoming">
+      <action type="add" issue="ltex-ls-plus#39,ltex-plus/vscode-ltex-plus#49">
+        Add support for Typst (LSP language IDs `typst`)
+      </action>
       <action type="add">
         Add Dockerfile.
       </action>
