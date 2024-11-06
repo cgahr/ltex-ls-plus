@@ -11,3 +11,5 @@
 /.vscode/settings.json
 
 /src/main/resources/completionList.*.txt
+
+ktlint.jar

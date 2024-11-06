@@ -66,14 +66,15 @@ class TypstAnnotatedTextBuilderTest : CodeAnnotatedTextBuilderTest("typst") {
   }
 
   @Test
-  fun testMathMode() {
+  fun testMarkup() {
     assertPlainText(
       """
-      This is the math mode $ A = pi r^2 $
-      in Typst
+      This is math$ A = pi r^2 $
+      in Typst.
+      This is *bold* text.
 
       """.trimIndent(),
-      "This is the math mode \nin Typst\n",
+      "This is math A = pi r^2 \nin Typst.\nThis is bold text.\n",
     )
   }
 
@@ -109,8 +110,9 @@ class TypstAnnotatedTextBuilderTest : CodeAnnotatedTextBuilderTest("typst") {
           author: name,
       )
       More text
+
       """.trimIndent(),
-      "\nauthor: name\nMore text",
+      "\n(author: name)\nMore text\n",
     )
   }
 
@@ -122,9 +124,20 @@ class TypstAnnotatedTextBuilderTest : CodeAnnotatedTextBuilderTest("typst") {
       #work(
         title: "Paper12",
       )
-      More text
+
       """.trimIndent(),
-      "Text\n\ntitle: \"Paper12\"\nMore text",
+      "Text\n\n(title: \"Paper12\")\n",
+    )
+  }
+
+  @Test
+  fun testEscapeCharacter() {
+    assertPlainText(
+      """
+      The amount is \$5
+      including VAT. This is a last backslash: \
+      """.trimIndent(),
+      "The amount is $5\nincluding VAT. This is a last backslash: \\",
     )
   }
 }
