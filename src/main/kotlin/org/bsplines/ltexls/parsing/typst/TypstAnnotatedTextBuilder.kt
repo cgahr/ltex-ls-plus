@@ -12,24 +12,21 @@ import org.bsplines.ltexls.parsing.CharacterBasedCodeAnnotatedTextBuilder
 class TypstAnnotatedTextBuilder(
   codeLanguageId: String,
 ) : CharacterBasedCodeAnnotatedTextBuilder(codeLanguageId) {
-  @Suppress("ReturnCount", "ComplexMethod")
+  @Suppress("ReturnCount")
   override fun processCharacter() {
-    if (processEscapeCharacter()) return
-
     if (this.isStartOfLine) {
       if (addMarkupInternal(LIST_REGEX)) return
       if (addMarkupInternal(LEADING_WHITESPACE_REGEX)) return
       if (addMarkupInternal(HEADING_REGEX)) return
     }
-
     if (addMarkupInternal(LINE_COMMENT_REGEX, "\n")) return
     if (addMarkupInternal(MULTILINELINE_COMMENT_REGEX, "\n")) return
-    if (addMarkupInternal(MARKUP_REGEX)) return
+    if (addMarkupInternal(MATH_REGEX)) return
     if (addMarkupInternal(LET_REGEX)) return
     if (addMarkupInternal(IMPORT_REGEX, "\n")) return
-    if (addMarkupInternal(SHOW_REGEX, "\n(")) return
-    if (addMarkupInternal(CODE_REGEX, "\n(")) return
-    if (addMarkupInternal(CLOSING_PARENTHESIS_REGEX, ")\n")) return
+    if (addMarkupInternal(SHOW_REGEX)) return
+    if (addMarkupInternal(CODE_REGEX)) return
+    if (addMarkupInternal(CLOSING_PARENTHESIS_REGEX, "\n")) return
 
     addText(this.curString)
   }
@@ -47,19 +44,6 @@ class TypstAnnotatedTextBuilder(
     return false
   }
 
-  private fun processEscapeCharacter(): Boolean {
-    // Check for backslash escape character
-    if (this.curString == "\\") {
-      addMarkup(this.curString)
-      // Add subsequent char as text if available
-      if (this.code.length > this.pos) {
-        addText(this.code[this.pos].toString())
-        return true
-      }
-    }
-    return false
-  }
-
   companion object {
     private val LIST_REGEX = Regex("^\\s*[+|\\-|\\/]\\s")
     private val LEADING_WHITESPACE_REGEX = Regex("^\\s*")
@@ -67,11 +51,11 @@ class TypstAnnotatedTextBuilder(
 
     private val LINE_COMMENT_REGEX = Regex("^\\/\\/.*(\r?\n|$)")
     private val MULTILINELINE_COMMENT_REGEX = Regex("^\\/\\*(.|\r?\n)*\\*\\/")
-    private val MARKUP_REGEX = Regex("^(\\$|\\*|\\_)")
+    private val MATH_REGEX = Regex("^\\$.*\\$")
     private val LET_REGEX = Regex("^#let\\s*[-a-z]*\\s*\\w*\\s*\\=")
     private val IMPORT_REGEX = Regex("^\\s*(#import|include).*\r?\n")
-    private val SHOW_REGEX = Regex("^#show:\\s\\w*.with\\(\\s*\r?\n")
-    private val CODE_REGEX = Regex("^#\\w*\\(\\s*\r?\n?")
-    private val CLOSING_PARENTHESIS_REGEX = Regex("^,?\r?\n\\s*\\)(\r?\n|$)")
+    private val SHOW_REGEX = Regex("^#show:\\s\\w*.with\\(")
+    private val CODE_REGEX = Regex("^#\\w*\\(")
+    private val CLOSING_PARENTHESIS_REGEX = Regex("^,\r?\n\\)(\r?\n|$)")
   }
 }

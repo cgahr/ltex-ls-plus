@@ -41,7 +41,7 @@ class LtexWorkspaceServiceTest {
     assertCheckDocumentResult("invalid_uri", false)
     assertCheckDocumentResult("file:///non_existent_path", false)
 
-    for (extension: String in listOf(".bib", ".md", ".org", ".Rnw", ".rst", ".tex", ".typ")) {
+    for (extension: String in listOf(".bib", ".md", ".org", ".Rnw", ".rst", ".tex")) {
       val tmpFile: File = File.createTempFile("ltex-", extension)
 
       try {
